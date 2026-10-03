@@ -1,0 +1,17 @@
+# Reference images, personal photos, generated images and secrets stay local.
+local-inputs/
+local-references/
+outputs/
+qa/
+*.png
+*.jpg
+*.jpeg
+*.webp
+*.gif
+.env
+.env.*
+*.key
+*.pem
+__pycache__/
+*.pyc
+.venv/

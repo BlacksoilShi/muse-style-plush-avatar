@@ -25,6 +25,8 @@ def finish(source, output, cx, cy, radius, protected, reviewed=False,
             raise ValueError('Animated inputs are unsupported')
         source_mode = image.mode
         if source_mode == 'RGB' and allow_rgb:
+            if 'transparency' in image.info:
+                raise ValueError('RGB transparency metadata is unsupported; provide genuinely opaque RGB or reviewed RGBA')
             original = image.convert('RGBA')
         elif source_mode == 'RGBA':
             original = image.copy()

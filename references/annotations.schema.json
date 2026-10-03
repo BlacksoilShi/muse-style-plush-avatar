@@ -1,0 +1,252 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Complete manual geometry review annotations",
+  "description": "Structural schema only. Runtime additionally verifies image hashes, actual dimensions, bounds, landmark rows and completeness. Unknown or occluded landmarks never imply a pass.",
+  "oneOf": [
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "image"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": 1
+        },
+        "image": {
+          "$ref": "#/$defs/annotation"
+        }
+      }
+    },
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "images"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": 1
+        },
+        "images": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/annotation"
+          }
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "annotation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "local_path",
+        "sha256",
+        "annotation_source",
+        "image_width",
+        "image_height",
+        "circle",
+        "panel_bbox",
+        "hood_span",
+        "hood_observation_status",
+        "panel_observation_status",
+        "neck_visible",
+        "neck_column_visible",
+        "rim_all_sides_visible",
+        "panel_unbroken",
+        "body_template_preserved"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "local_path": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Absolute or relative to this annotation JSON file, never CWD"
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "annotation_source": {
+          "const": "manual_visual_review"
+        },
+        "image_width": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "image_height": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "circle": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "cx",
+            "cy",
+            "r"
+          ],
+          "properties": {
+            "cx": {
+              "type": "number"
+            },
+            "cy": {
+              "type": "number"
+            },
+            "r": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            }
+          }
+        },
+        "panel_bbox": {
+          "type": "array",
+          "minItems": 4,
+          "maxItems": 4,
+          "items": {
+            "type": "number"
+          }
+        },
+        "hood_span": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "x0",
+            "x1",
+            "y"
+          ],
+          "properties": {
+            "x0": {
+              "type": "number"
+            },
+            "x1": {
+              "type": "number"
+            },
+            "y": {
+              "type": "number"
+            }
+          }
+        },
+        "torso_span": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "x0",
+            "x1",
+            "y"
+          ],
+          "properties": {
+            "x0": {
+              "type": "number"
+            },
+            "x1": {
+              "type": "number"
+            },
+            "y": {
+              "type": "number"
+            }
+          }
+        },
+        "arm_span": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "x0",
+            "x1",
+            "y"
+          ],
+          "properties": {
+            "x0": {
+              "type": "number"
+            },
+            "x1": {
+              "type": "number"
+            },
+            "y": {
+              "type": "number"
+            }
+          }
+        },
+        "crown_y": {
+          "type": "number"
+        },
+        "hood_bbox": {
+          "type": "array",
+          "minItems": 4,
+          "maxItems": 4,
+          "items": {
+            "type": "number"
+          }
+        },
+        "shoulder_bbox": {
+          "type": "array",
+          "minItems": 4,
+          "maxItems": 4,
+          "items": {
+            "type": "number"
+          }
+        },
+        "notes": {
+          "type": "string"
+        },
+        "hood_occluded": {
+          "type": "boolean"
+        },
+        "neck_visible": {
+          "type": "boolean"
+        },
+        "neck_column_visible": {
+          "type": "boolean"
+        },
+        "rim_all_sides_visible": {
+          "type": "boolean"
+        },
+        "panel_unbroken": {
+          "type": "boolean"
+        },
+        "hood_observation_status": {
+          "enum": [
+            "observed",
+            "unjudgeable"
+          ]
+        },
+        "panel_observation_status": {
+          "enum": [
+            "observed",
+            "unjudgeable"
+          ]
+        },
+        "torso_observation_status": {
+          "enum": [
+            "observed",
+            "unjudgeable"
+          ]
+        },
+        "arm_observation_status": {
+          "enum": [
+            "observed",
+            "unjudgeable"
+          ]
+        },
+        "crown_observation_status": {
+          "enum": [
+            "observed",
+            "unjudgeable"
+          ]
+        },
+        "body_template_preserved": {
+          "type": "boolean",
+          "description": "Manual comparison confirms fixed-master-like squat body/support/crop, with clothing wrapping the same stuffed bulk"
+        }
+      }
+    }
+  }
+}

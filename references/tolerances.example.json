@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "notes": "Proposed review tolerances only; not facts measured from the original reference. Review and choose these explicitly before use. Absolute tolerances are normalized ratio differences, not pixels or percentage-relative error.",
+  "baseline_tolerances": {
+    "panel_aspect": {
+      "absolute": 0.06
+    },
+    "panel_width_to_hood_width": {
+      "absolute": 0.03
+    },
+    "hood_width_to_circle_diameter": {
+      "absolute": 0.03
+    },
+    "panel_center_x_offset_to_circle_diameter": {
+      "absolute": 0.015
+    },
+    "panel_center_y_offset_to_circle_diameter": {
+      "absolute": 0.02
+    },
+    "torso_width_to_hood_width": {
+      "absolute": 0.05
+    },
+    "torso_row_below_panel_to_panel_height": {
+      "absolute": 0.02
+    }
+  },
+  "acceptance_bands": {},
+  "group_max_spread": {
+    "panel_aspect": 0.06,
+    "panel_width_to_hood_width": 0.03,
+    "hood_width_to_circle_diameter": 0.03
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "images": [
+    {
+      "id": "candidate",
+      "local_path": "../generated/candidate.png",
+      "annotation_source": "manual_visual_review",
+      "notes": "TEMPLATE ONLY: supply actual manual observations. Do not infer obscured hood or arm attachment boundaries."
+    }
+  ]
+}

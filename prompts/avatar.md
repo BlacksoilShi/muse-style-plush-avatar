@@ -1,27 +1,41 @@
-# 可复制提示词 / Portable prompt
+# 单母版、分阶段编辑 / Single-master staged edit
 
-替换全部方括号。只描述实际已上传的图，缺失图片时删除该句。用户未授权上传个人照片到选定服务时，不代为上传。
+先实际查看源图，写出3–5个可见特征及附着区域；原图不作为默认图像工具输入。以下所有阶段只传入一张当前底图，不声称模型看了未上传照片。母版与容差须来自用户自己的已确认模板；本公开包不附带私人母版。
 
-## 中文，多参考编辑
+## 中文：阶段 A
 
-图 1 是主体照片，只从它提取 [3–5 个可见辨识点]。图 2 是我有权使用的头像造型参考，负责脸部形状与构图；图 3 是全身参考，负责短绒材质、体型和四肢。请把主体转成一个可辨认的毛绒小人，不复制参考截图的文字或界面。
+“唯一输入图是固定毛绒角色编辑底图。来源图片已由执行者实际看图，但未传给图像工具。本轮只将这些特征转为身体外层布料：[服装主色、滚边、标志]。整个头、布面、五官、厚四边绒框和头像圆盘不动，不加头发／耳朵／头饰。身体只换面料，保持原圆胖填充体积、肩臂位置、无颈承托和裁切；无窄颈柱、真人胸腰或新姿势。保留已测母版几何：[真实归一化目标／容差]。无UI、文字、无关配件，圆外真实透明。”
 
-大头小身体，圆润短肢，奶油米白细密短绒，浅杏色织布脸，有微小高光的黑珠眼，极简弧线微笑，淡粉腮红。保留主体关键发色、服装配色和配件，转成简化布料形态。不要写实鼻嘴、牙齿、复杂手指、额外角色、文字、水印或界面。除非主体本身是动物并需要保留对应特征，不添加耳朵或尾巴。
+无身体外观变化时跳过A。确认A仍符合母版后，才继续B。
 
-制作一张正面头肩圆形头像，方形画布，浅蓝圆内背景，完整头部和所有头发/帽子/耳朵/配件均留在圆边以内并有余量，柔和均匀光照。[若工具支持真实 alpha：圆外真实透明，导出支持透明的 PNG；否则：输出浅蓝背景方图，保留圆形安全构图，不绘制棋盘格，随后另做圆形透明蒙版。]
+## 中文：阶段 B
 
-## English, multiple-reference edit
+“唯一输入图是上一阶段合格的固定毛绒小人。只增加这些源图可见特征：[后侧发片／小耳朵／眼镜／饰物及明确附着区域]。保持现有身体、衣服、脸、头套、五官和圆盘不重构，不缩放、移动或下移小人。头发只在奶油头套后侧，奶油前部在发片前方；不画遮脸刘海或覆盖绒框的大假发。保留发色与扫向／长度特征，不变成无关细线。动物斑纹是在原绒毛上着色，不新增加宽头的厚毛块；眼镜围绕原珠眼，只缩镜架，不移动眼睛。大配件只缩小、侧移或改为布面之外的小扁饰，不用挤压头脸空间。保留真实母版几何：[P/H、H/D、P/D、面板宽高、中心及容差]。无新姿势、鼻梁、吻部或额外道具。圆外透明。”
 
-Image 1 is the subject photo: preserve only these visible identifying features: [3–5 features]. Image 2 is an authorized portrait style reference for facial construction and composition. Image 3 is an authorized full-body reference for proportions, limbs and fabric. Transform the subject into one recognizable plush character; ignore text and interface fragments in references.
+无头部附件时跳过B。若B破坏几何，回到A而非继续使用错误头型；改动附件布局并重新检查。
 
-Use a large rounded head, small pear-shaped body and short rounded limbs. Dense cream short-pile plush outside, pale apricot woven-fabric face, small black bead eyes with tiny highlights, a minimal curved smile and subtle pink cheeks. Translate the subject's distinctive hair, clothing colors and accessories into simple fabric details. No realistic nose, lips, teeth, intricate fingers, extra characters, text, watermark or interface. Add no extra ears or tail unless intentionally preserving an animal subject's defining features.
+## English: stage A
 
-Create a centered front-facing head-and-shoulders avatar on a square canvas, composed safely inside a circle with a pale-blue interior. Keep the entire head, hair, hat, ears and accessories comfortably within the circle. Soft even lighting. [If real alpha export is supported: transparent outside the circle, export PNG. Otherwise: use a plain pale-blue square background with circle-safe framing, no checkerboard; circular transparency will be applied separately.]
+The ONLY supplied image is the fixed plush MASTER edit target. The source photo was actually inspected by the operator, but is not supplied to the image model. Change only torso fabric appearance using these observed cues: [clothing colors, piping, emblem]. Preserve the entire head, woven panel, facial features, raised four-sided cream rim, circle and camera. Add no hair, ears or head ornaments in this step. Clothing wraps the same stout stuffed body with the same shoulder/arm positions and directly connected neckless support; no thin post, human waist or new pose. Frozen measured geometry: [actual baseline targets/tolerances]. No text/UI or invented props. True transparent exterior if supported.
 
-## 文字模式 / Text-only fallback
+Skip stage A when no torso changes are needed; inspect it before stage B.
 
-无法输入参考时，删除三图分工段，改成“设计一个原创毛绒角色，主体特征为 [可见特征的文字描述]”，保留风格与构图段。明确这是基于文字的近似设计，不是对照片/固定角色的忠实还原。不要写“与我上传的照片一致”而实际上没有上传照片。
+## English: stage B
 
-## 全身变体
+The ONLY supplied image is the accepted preceding stage. Add only these actually observed appearance cues: [small rear hair pieces/ears/glasses/ornaments and attachment zones]. Keep the existing body, clothing, face, hood, facial features, framing and circle unchanged. No zoom, head shifting or reconstruction. Hair stays BEHIND the cream hood, with recognizable hue and direction/length; no front bangs across cloth, no wig replacing the rim, no meaningless generic stripe. Recolor existing fur for animal markings without widening the actual hood. Fit glasses to existing eyes, never move the eyes. Simplify/reposition accessories or use small flat ornaments outside the cloth rather than moving the mascot to fit them. Preserve measured P/H, H/D, P/D, panel aspect and center: [actual values/tolerances]. No anatomical muzzle, nose, new pose or extra props.
 
-将头像构图段替换为：一个完整全身角色，短臂短腿都在画面内，居中，干净浅色背景，柔和光照与轻微接触阴影。非圆形输出跳过圆边脚本。
+Skip B when no head additions are needed. If B drifts, restart that stage from the last accepted image with a genuinely different accessory arrangement, rather than building on the wrong geometry.
+
+## Limits
+
+If the product cannot isolate the master as the edit input, disclose the conditioning limitation; do not promise the same stability. A text-only product without a master cannot guarantee fixed geometry. An explicit full-body request uses a separate frozen full-body template, not a silent reframe of this avatar workflow. Verify actual alpha output; a checkerboard is not transparency.
+
+## 可选技术阶段：不透明方形中间图
+
+仅当用户／宿主允许后续alpha圆边处理时使用。只输入当前已通过造型的成图：
+
+“仅将这张图转换为完全不透明的浅蓝方形中间图。保持角色的脸、头套、五官、头身、服装、配件、镜头和画布位置，不重构、不缩放。只将圆外背景补为同色浅蓝，并输出真正RGB或全alpha255；不要伪画透明棋盘格。中间图不需要透明，后续会单独恢复透明圆外。”
+
+English: “Convert only the background/output opacity of this accepted avatar into a fully opaque pale-blue SQUARE intermediate. Preserve the exact visible mascot geometry, face, hood, features, clothing, accessories, camera and positions; no resizing or reconstruction. Extend only the pale-blue background. Output genuinely opaque RGB or alpha255, no checkerboard. This intermediate is intentionally opaque; authorized circular-alpha finishing follows separately.”
+
+按工具当前实际接口选择不透明输出，不臆造参数。之后检查新造型未漂移、真实不透明，再运行有限alpha蒙版和全套最终检查；不能以旧文件的报告代替新文件。

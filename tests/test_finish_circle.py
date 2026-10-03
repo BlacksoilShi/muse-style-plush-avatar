@@ -11,6 +11,15 @@ MODULE = importlib.util.module_from_spec(SPEC)
 SPEC.loader.exec_module(MODULE)
 
 class CircleTests(unittest.TestCase):
+    def test_reject_rgb_transparency_metadata(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            source = root / 'keyed.png'
+            Image.new('RGB', (64,64), (12,34,56)).save(source, transparency=(12,34,56))
+            with self.assertRaisesRegex(ValueError, 'transparency metadata'):
+                MODULE.finish(source, root / 'out.png', 31.5, 31.5, 28,
+                              [(31,10)], reviewed=True, allow_rgb=True)
+            self.assertFalse((root / 'out.png').exists())
     def setUp(self):
         self.temp = tempfile.TemporaryDirectory()
         self.addCleanup(self.temp.cleanup)

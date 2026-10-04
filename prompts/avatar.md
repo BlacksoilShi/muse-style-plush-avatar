@@ -1,41 +1,39 @@
-# 单母版、分阶段编辑 / Single-master staged edit
+# 可复制短提示与定向修正
 
-先实际查看源图，写出3–5个可见特征及附着区域；原图不作为默认图像工具输入。以下所有阶段只传入一张当前底图，不声称模型看了未上传照片。母版与容差须来自用户自己的已确认模板；本公开包不附带私人母版。
+一次只用适合当前输入的一条。把方括号替换成实际观察，删掉无关项。不要把测量报告、API参数、全部修正句一起粘贴给模型。平台专用首轮见 [Grok](../adapters/grok.md) 与 [Muse](../adapters/muse.md)。
 
-## 中文：阶段 A
+## 双图通用版
 
-“唯一输入图是固定毛绒角色编辑底图。来源图片已由执行者实际看图，但未传给图像工具。本轮只将这些特征转为身体外层布料：[服装主色、滚边、标志]。整个头、布面、五官、厚四边绒框和头像圆盘不动，不加头发／耳朵／头饰。身体只换面料，保持原圆胖填充体积、肩臂位置、无颈承托和裁切；无窄颈柱、真人胸腰或新姿势。保留已测母版几何：[真实归一化目标／容差]。无UI、文字、无关配件，圆外真实透明。”
+输入顺序：A共同脸部母版在前，B当前主体在后。确认图像工具确实收到两张图。
 
-无身体外观变化时跳过A。确认A仍符合母版后，才继续B。
+> 图1提供脸部模板，图2提供当前角色外观。保持图1独立圆角矩形织布面的宽高位置、黑珠眼、短弧笑口和粉腮红。将外部造型完整换成图2：[发型、刘海、耳朵、配饰、衣服与层次]，去掉图1不属于当前角色的发型、头饰和衣服。刘海可覆盖额头外层绒边，布面和五官完整可见，脸边留可读奶油绒内缘。正面毛绒胸像，丰满肩身直接接头，无细颈。保留服装与饰物的可辨形状，1:1浅蓝圆盘构图，无文字。
 
-## 中文：阶段 B
+English alternative (use instead of, not in addition to, the Chinese prompt):
 
-“唯一输入图是上一阶段合格的固定毛绒小人。只增加这些源图可见特征：[后侧发片／小耳朵／眼镜／饰物及明确附着区域]。保持现有身体、衣服、脸、头套、五官和圆盘不重构，不缩放、移动或下移小人。头发只在奶油头套后侧，奶油前部在发片前方；不画遮脸刘海或覆盖绒框的大假发。保留发色与扫向／长度特征，不变成无关细线。动物斑纹是在原绒毛上着色，不新增加宽头的厚毛块；眼镜围绕原珠眼，只缩镜架，不移动眼睛。大配件只缩小、侧移或改为布面之外的小扁饰，不用挤压头脸空间。保留真实母版几何：[P/H、H/D、P/D、面板宽高、中心及容差]。无新姿势、鼻梁、吻部或额外道具。圆外透明。”
+> Edit image 1 using image 2 only for the character's outer appearance. Keep image 1's separate rounded-rectangle woven face panel at the same size and position, with the same black bead eyes, curved smile and pink cheeks. Replace the hair, bangs, ears, accessories and complete visible outfit with image 2: [observed details]. Remove image 1's unrelated hair, ornaments and clothing. Bangs may cover the outer forehead fur, but leave the cloth face and features visible with a readable cream-fur inner rim. Front-facing stuffed plush bust, full soft shoulders directly supporting the head, no thin neck. Preserve recognizable outfit layers and accessory shapes. Square pale-blue circular-avatar composition, no text.
 
-无头部附件时跳过B。若B破坏几何，回到A而非继续使用错误头型；改动附件布局并重新检查。
+## 只有一张编辑输入时
 
-## English: stage A
+只上传A。执行者先实际看B再填写描述；不要声称生图模型收到B。
 
-The ONLY supplied image is the fixed plush MASTER edit target. The source photo was actually inspected by the operator, but is not supplied to the image model. Change only torso fabric appearance using these observed cues: [clothing colors, piping, emblem]. Preserve the entire head, woven panel, facial features, raised four-sided cream rim, circle and camera. Add no hair, ears or head ornaments in this step. Clothing wraps the same stout stuffed body with the same shoulder/arm positions and directly connected neckless support; no thin post, human waist or new pose. Frozen measured geometry: [actual baseline targets/tolerances]. No text/UI or invented props. True transparent exterior if supported.
+> 编辑这张共同母版，只替换布面以外的造型为：[完整外观描述与位置关系]。保持独立圆角矩形织布脸的大小位置、黑珠眼、短弧笑口和粉腮红。刘海可压住额头外层绒缘，脸面和五官完整露出，沿脸留奶油绒内缘。保留完整发型与服装层次、可读配饰；去掉母版不属于目标角色的旧造型。正面平视毛绒胸像，头直接接丰满肩身，无细颈，维持脸部尺度与圆盘构图。
 
-Skip stage A when no torso changes are needed; inspect it before stage B.
+这条路径丢失B的视觉条件，可能不如实际双图保留细节；不是性能保证。
 
-## English: stage B
+## 定向修正：每次只挑一条
 
-The ONLY supplied image is the accepted preceding stage. Add only these actually observed appearance cues: [small rear hair pieces/ears/glasses/ornaments and attachment zones]. Keep the existing body, clothing, face, hood, facial features, framing and circle unchanged. No zoom, head shifting or reconstruction. Hair stays BEHIND the cream hood, with recognizable hue and direction/length; no front bangs across cloth, no wig replacing the rim, no meaningless generic stripe. Recolor existing fur for animal markings without widening the actual hood. Fit glasses to existing eyes, never move the eyes. Simplify/reposition accessories or use small flat ornaments outside the cloth rather than moving the mascot to fit them. Preserve measured P/H, H/D, P/D, panel aspect and center: [actual values/tolerances]. No anatomical muzzle, nose, new pose or extra props.
+只在脸合格时把当前图作为编辑底图；若脸已偏移，回到A+B重新做，并引用A的几何。引用来源图的句子只在来源真的同时输入时使用，否则改写成已观察的具体外观。
 
-Skip B when no head additions are needed. If B drifts, restart that stage from the last accepted image with a genuinely different accessory arrangement, rather than building on the wrong geometry.
+- **刘海/分层丢失：** “只补回来源中的[刘海扫向、层次和发髻]，保留当前织布脸与五官位置。头发自然覆盖额头外层绒缘，不遮布面；保留完整发型，不缩成后侧小毛束。”
+- **衣服变胸前色块：** “只恢复[外套、领口、翻领、袖肩、花纹和层次]的完整可见形状，服装包住丰满毛绒肩身。保留当前脸和头部位置，不加细颈或真人腰身。”
+- **鱼/花被缩成徽章：** “只把[配饰]恢复为来源可辨的完整形状，放在[实际位置关系]，保留自然体积与颜色。维持脸和构图；如果圆内放不下，请指出冲突，不自行改成徽章。”
+- **母版串色：** “只将残留的[具体母版特征]换成[来源特征]。保留当前合格的脸、五官与其他已正确造型。”
+- **出现细脖子：** “只修正头下连接：丰满柔软的毛绒肩身直接承托头部，领口包覆这一体积，不藏一根细颈柱。脸的大小、位置及服装辨识细节保持不变。”
 
-## Limits
+## 文件步骤：可选不透明中间图
 
-If the product cannot isolate the master as the edit input, disclose the conditioning limitation; do not promise the same stability. A text-only product without a master cannot guarantee fixed geometry. An explicit full-body request uses a separate frozen full-body template, not a silent reframe of this avatar workflow. Verify actual alpha output; a checkerboard is not transparency.
+仅在确实需要修复透明文件、且后续圆边处理已获授权时，对当前合格图单独操作：
 
-## 可选技术阶段：不透明方形中间图
+> 只把背景与输出改为完全不透明的浅蓝方形中间图。保留当前角色的脸、五官、头发、饰物、服装、头身承托、镜头和位置。不要重构或缩放角色，不画棋盘格。这个中间图暂不需要透明。
 
-仅当用户／宿主允许后续alpha圆边处理时使用。只输入当前已通过造型的成图：
-
-“仅将这张图转换为完全不透明的浅蓝方形中间图。保持角色的脸、头套、五官、头身、服装、配件、镜头和画布位置，不重构、不缩放。只将圆外背景补为同色浅蓝，并输出真正RGB或全alpha255；不要伪画透明棋盘格。中间图不需要透明，后续会单独恢复透明圆外。”
-
-English: “Convert only the background/output opacity of this accepted avatar into a fully opaque pale-blue SQUARE intermediate. Preserve the exact visible mascot geometry, face, hood, features, clothing, accessories, camera and positions; no resizing or reconstruction. Extend only the pale-blue background. Output genuinely opaque RGB or alpha255, no checkerboard. This intermediate is intentionally opaque; authorized circular-alpha finishing follows separately.”
-
-按工具当前实际接口选择不透明输出，不臆造参数。之后检查新造型未漂移、真实不透明，再运行有限alpha蒙版和全套最终检查；不能以旧文件的报告代替新文件。
+真实输出模式由平台能力决定，文字要求不等于文件已合格。重新检查RGB/RGBA、角色和构图后再收尾；不能用旧报告代替新文件检查。

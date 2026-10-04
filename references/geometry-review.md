@@ -1,4 +1,6 @@
-# Manual geometry review
+# Legacy fixed-hood geometry review
+
+Historical mode only. The current default preserves complete hair and clothing and uses [face-review.md](face-review.md). Do not apply this checker's fixed hood/body criteria to claim acceptance of the new mode. The code and schemas are retained unchanged for compatibility.
 
 This helper only reads image bytes for SHA-256 and Pillow metadata. It never
 reads pixels for segmentation, auto-detects a face, resizes, crops, composites,
